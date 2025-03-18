@@ -1,5 +1,6 @@
+{% load wagtailcore_tags %}
 <html>
   <body>
-    {{ page.body }}
+    {{ page.body|richtext }}
   </body>
 </html>
