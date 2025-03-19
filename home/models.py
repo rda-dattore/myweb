@@ -53,6 +53,54 @@ class DecsStaff(models.Model):
 
 
 @register_snippet
+class SocialMedia(models.Model):
+    """ Social media links for snippets """
+
+    name = models.CharField(max_length=50)
+    related_url = models.URLField(
+        blank=False,
+        null=False,
+        help_text='Link to social media page',
+    )
+    aria_label=models.CharField(
+        max_length=50,
+        help_text='Aria label to apply to the <a href> tag',
+    )
+    icon_style=models.CharField(
+        max_length=50,
+        default="",
+        verbose_name='Icon style',
+        help_text="Icon style class to render the social media icon. Specify 'fab' for brands and 'fas' for solid.  See fontawesome version 5 documentation for more info.",
+    )
+    icon_name=models.CharField(
+        max_length=50,
+        default="",
+        verbose_name='Icon name',
+        help_text='Icon name class from the fontawesome icon set',
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("name"),
+                FieldPanel("related_url"),
+                FieldPanel("aria_label"),
+                FieldPanel("icon_style"),
+                FieldPanel("icon_name"),
+            ]
+        )
+    ]
+
+    def __str__(self):
+        """ String repr of this class """
+        return self.name
+
+    class Meta:
+        verbose_name = "Social Media Link"
+        verbose_name_plural = "Social Media Links"
+
+
+@register_snippet
 class AlertMessage(models.Model):
     """ Alert message for snippets """
 
