@@ -8,6 +8,47 @@ from wagtail.fields import RichTextField
 from wagtail.models import Page
 
 
+@register_snippet
+class DecsStaff(models.Model):
+    """ DECS staff members for snippets """
+
+    name = models.CharField(
+        max_length=100,
+        help_text='DECS staff member name',
+    )
+    email = models.EmailField(
+        max_length=100,
+        default='rdahelp@ucar.edu',
+    )
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="+",
+        help_text='DECS staff image (optional)',
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("name"),
+                FieldPanel("email"),
+                ImageChooserPanel("image"),
+            ],
+            heading="Name, Email, and Image"
+        )
+    ]
+
+    def __str__(self):
+        """ String repr of this class """
+        return self.name
+
+    class Meta:
+        verbose_name = "DECS Staff Member"
+        verbose_name_plural = "DECS Staff Members"
+
+
 class HomePage(Page):
     tagline = models.CharField(max_length=100, blank=False, default="")
     welcome = RichTextField(blank=False, default="")
