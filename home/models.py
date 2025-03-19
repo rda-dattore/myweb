@@ -5,7 +5,6 @@ from wagtail.admin.panels import (
     PageChooserPanel
 )
 from wagtail.fields import RichTextField
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.models import Page
 from wagtail.snippets.models import register_snippet
 
@@ -36,7 +35,7 @@ class DecsStaff(models.Model):
             [
                 FieldPanel("name"),
                 FieldPanel("email"),
-                ImageChooserPanel("image"),
+                FieldPanel("image"),
             ],
             heading="Name, Email, and Image"
         )
