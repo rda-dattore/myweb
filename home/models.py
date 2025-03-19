@@ -6,6 +6,7 @@ from wagtail.admin.panels import (
 )
 from wagtail.fields import RichTextField
 from wagtail.models import Page
+from wagtail.snippets.models import register_snippet
 
 
 @register_snippet
