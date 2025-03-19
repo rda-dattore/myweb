@@ -50,6 +50,75 @@ class DecsStaff(models.Model):
         verbose_name_plural = "DECS Staff Members"
 
 
+@register_snippet
+class AlertMessage(models.Model):
+    """ Alert message for snippets """
+
+    DANGER = 'danger'
+    WARNING = 'warning'
+    INFO = 'info'
+    LEVEL_CHOICES = [
+        (DANGER, 'danger'),
+        (WARNING, 'warning'),
+        (INFO, 'info'),
+    ]
+    message = RichTextField(blank=False, default="")
+    name = models.CharField(max_length=100)
+    level = models.CharField(
+        max_length=7,
+        choices=LEVEL_CHOICES,
+        default=INFO,
+    )
+    related_url = models.URLField(
+        blank=True,
+        null=True,
+        help_text='Optional.  Related page takes precedence over related URL.',
+    )
+    related_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Optional.  Related page takes precedence over related URL.',
+    )
+    start_date = models.DateField('Start date', default=date.today())
+    end_date = models.DateField('End date', default=date.today())
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("name"),
+                FieldPanel("message"),
+                FieldPanel("level"),
+            ],
+            heading="Alert name, message, and level",
+        ),
+        MultiFieldPanel(
+            [
+                PageChooserPanel("related_page"),
+                FieldPanel("related_url"),
+            ],
+            heading="Related URL or page",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("start_date"),
+                FieldPanel("end_date"),
+            ],
+            heading="Start and end dates to display message",
+        ),
+    ]
+
+    def __str__(self):
+        """ String repr of this class """
+        return self.name
+
+    class Meta:
+        verbose_name = "Alert Message"
+        verbose_name_plural = "Alert Messages"
+
+
 class HomePage(Page):
     tagline = models.CharField(max_length=100, blank=False, default="")
     welcome = RichTextField(blank=False, default="")
