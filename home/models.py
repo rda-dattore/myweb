@@ -4,7 +4,6 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
     PageChooserPanel
 )
-from django.utils import timezone
 from wagtail.fields import RichTextField
 from wagtail.models import Page
 from wagtail.snippets.models import register_snippet
@@ -131,8 +130,8 @@ class AlertMessage(models.Model):
         related_name='+',
         help_text='Optional.  Related page takes precedence over related URL.',
     )
-    start_date = models.DateField('Start date', default=timezone.now())
-    end_date = models.DateField('End date', default=timezone.now())
+    start_date = models.DateField('Start date', default=django.utils.timezone.now)
+    end_date = models.DateField('End date', default=django.utils.timezone.now)
 
     panels = [
         MultiFieldPanel(
