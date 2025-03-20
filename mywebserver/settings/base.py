@@ -23,7 +23,11 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+SILENCED_SYSTEM_CHECKS = [
+    "wagtailadmin.W002",
+]
 
 
 # Quick-start development settings - unsuitable for production
