@@ -1,1 +1,2 @@
 django-settings-export>=1.2.1
+wagtailmenus>=3.0.0
