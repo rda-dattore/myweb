@@ -68,11 +68,11 @@ def get_item(dictionary, key):
 @register.filter
 def get_dsid_from_url(url):
     # check for 'dnnnnnn'
-    match = re.search('([a-z]\d{6})', url)
+    match = re.search(r"([a-z]\d{6})", url)
     if match is not None:
         return match.group(0)
     # check for 'dsnnn.n'
-    match = re.search('(ds\d{3}.\d{1})', url)
+    match = re.search(r"(ds\d{3}.\d{1})", url)
     if match is not None:
         return match.group(0)
     return None
