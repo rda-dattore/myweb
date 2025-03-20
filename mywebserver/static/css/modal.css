@@ -27,7 +27,7 @@
     position: fixed;
     z-index: 3002;
     cursor: pointer;
-    content: url("/images/close_button.png");
+    content: url("/static/images/close_button.png");
 }
 .modal-loader:before, .modal-loader:after {
     display: inline-block;
