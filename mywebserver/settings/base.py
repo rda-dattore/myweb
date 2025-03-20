@@ -29,6 +29,8 @@ SILENCED_SYSTEM_CHECKS = [
     "wagtailadmin.W002",
 ]
 
+DJANGO_SUPERUSER = local_settings.DJANGO_SUPERUSER
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
