@@ -1,0 +1,14 @@
+replicaCount: 1
+
+webapp:
+  name: rda-webserver-test
+  group: rda-web-test
+  path: /
+  tls:
+    fqdn: rda-web-test.k8s.ucar.edu
+    secretName: incommon-cert-rda-web-test
+  container: 
+    image: docker.io/dattore/rda-web-test:myweb-webserver
+    port: 443
+    memory: 1G
+    cpu: 2
