@@ -31,6 +31,7 @@ SILENCED_SYSTEM_CHECKS = [
 
 DJANGO_SUPERUSER = local_settings.DJANGO_SUPERUSER
 
+CSRF_TRUSTED_ORIGINS = ["https://rda-web-test.k8s.ucar.edu"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
