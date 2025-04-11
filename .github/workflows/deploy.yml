@@ -6,4 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check Docker
-        run: docker build
+        run: docker pull dattore/rda-web-test:latest
+        run: version=`docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version'`
+        run: echo $version
