@@ -1,7 +1,7 @@
 on:
   push:
-    paths:
-      - "myweb/**"
+    paths-ignore:
+      - ".github/**"
 
 jobs:
   Deploy:
