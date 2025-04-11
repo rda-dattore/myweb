@@ -10,6 +10,8 @@ jobs:
       - name: Pull the latest image
         run: docker pull dattore/rda-web-test:latest
       - name: Get the latest version number
-        run: echo "VERSION=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version' | cut -c2,3)" >> $GITHUB_ENV
-      - name: Print version
-        run: echo $VERSION
+        run: echo "VERSION=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version' | cut -c2,10)" >> $GITHUB_ENV
+      - name: Increment version number
+        run: ((VERSION++))
+      - name: Create new version tag
+        run: VERSION="v"$VERSION
