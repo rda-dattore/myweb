@@ -1,0 +1,9 @@
+on:
+  push
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Docker
+        run: docker build
