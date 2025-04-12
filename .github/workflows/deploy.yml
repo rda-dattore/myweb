@@ -18,4 +18,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Junk step
-        run: ls -lt x
+        run: |
+          export A=a
+          export B=b
+          echo "$A $B"
