@@ -24,7 +24,7 @@ jobs:
       - name: Export secrets
         id: secrets
         run: |
-          echo "WAGTAIL_USERNAME=$(export WAGTAIL_USERNAME=${{ secrets.WAGTAIL_USERNAME }})" >> $GITHUB_ENV
+          echo "export WAGTAIL_USERNAME=${{ secrets.WAGTAIL_USERNAME }}" >> $GITHUB_ENV
           echo "WAGTAIL_PASSWORD=$(export WAGTAIL_PASSWORD=${{ secrets.WAGTAIL_PASSWORD }})" >> $GITHUB_ENV
           echo "WAGTAIL_HOST=$(export WAGTAIL_HOST=${{ secrets.WAGTAIL_HOST }})" >> $GITHUB_ENV
           echo "WAGTAIL_DBNAME=$(export WAGTAIL_DBNAME=${{ secrets.WAGTAIL_DBNAME }})" >> $GITHUB_ENV
