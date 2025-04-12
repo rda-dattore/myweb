@@ -15,3 +15,7 @@ jobs:
         run: ((VERSION++))
       - name: Create new version tag
         run: VERSION="v"$VERSION
+      - name: Checkout the repository
+        run: actions/checkout@v3
+      - name: Junk step
+        run: ls -lt x
