@@ -4,7 +4,7 @@ on:
       - ".github/**"
 
 jobs:
-  Rebuild_Webserver_Container:
+  container-rebuild:
     runs-on: ubuntu-latest
     steps:
       - name: Pull the latest image
