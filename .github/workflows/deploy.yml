@@ -15,10 +15,12 @@ jobs:
       - name: Increment version number
         run: ((VERSION++))
       - name: Export the new version tag
-        run: echo "VERSION=$(export VERSION="v"$VERSION)" >> $GITHUB_ENV
+        id: version
+        run: echo "VERSION="v"$VERSION" >> $GITHUB_OUTPUT
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Export secrets
+        id: secrets
         run: |
           echo "WAGTAIL_USERNAME=$(export WAGTAIL_USERNAME=${{ secrets.WAGTAIL_USERNAME }})" >> $GITHUB_ENV
           echo "WAGTAIL_PASSWORD=$(export WAGTAIL_PASSWORD=${{ secrets.WAGTAIL_PASSWORD }})" >> $GITHUB_ENV
@@ -30,8 +32,10 @@ jobs:
           echo "DJANGO_SUPERUSER_EMAIL=$(export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL}})" >> $GITHUB_ENV
       - name: Build new version of the container
         run: >
-          docker build --platform linux/amd64 --build-arg VERSION=$VERSION
+          docker build --platform linux/amd64
+          --build-arg VERSION=${{ steps.version.output.VERSION }}
           --secret id=WAGTAIL_USERNAME --secret id=WAGTAIL_PASSWORD
           --secret id=WAGTAIL_HOST --secret id=WAGTAIL_PORT --secret id=WAGTAIL_DBNAME
           --secret id=DJANGO_SUPERUSER_USERNAME --secret id=DJANGO_SUPERUSER_PASSWORD
-          --secret id=DJANGO_SUPERUSER_EMAIL -t dattore/rda-web-test:$VERSION --no-cache .
+          --secret id=DJANGO_SUPERUSER_EMAIL
+          -t dattore/rda-web-test:${{ steps.version.output.VERSION }} --no-cache .
