@@ -15,8 +15,7 @@ jobs:
       - name: Increment version number
         run: ((VERSION++))
       - name: Export the new version tag
-        id: version
-        run: echo "VERSION="v"$VERSION" >> $GITHUB_OUTPUT
+        run: export VERSION="v"$VERSION
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Export secrets
@@ -33,9 +32,9 @@ jobs:
       - name: Build new version of the container
         run: >
           docker build --platform linux/amd64
-          --build-arg VERSION=${{ steps.version.output.VERSION }}
+          --build-arg VERSION=$VERSION
           --secret id=WAGTAIL_USERNAME --secret id=WAGTAIL_PASSWORD
           --secret id=WAGTAIL_HOST --secret id=WAGTAIL_PORT --secret id=WAGTAIL_DBNAME
           --secret id=DJANGO_SUPERUSER_USERNAME --secret id=DJANGO_SUPERUSER_PASSWORD
           --secret id=DJANGO_SUPERUSER_EMAIL
-          -t dattore/rda-web-test:${{ steps.version.output.VERSION }} --no-cache .
+          -t dattore/rda-web-test:$VERSION --no-cache .
