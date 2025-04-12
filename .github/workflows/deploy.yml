@@ -18,7 +18,7 @@ jobs:
         run: VERSION="v"$VERSION
       - name: Checkout the repository
         uses: actions/checkout@v4
-      - name: Junk step
+      - name: Export secrets
         run: |
           export WAGTAIL_USERNAME=${{ secrets.WAGTAIL_USERNAME }}
           export WAGTAIL_PASSWORD=${{ secrets.WAGTAIL_PASSWORD }}
@@ -28,4 +28,10 @@ jobs:
           export DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
           export DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
           export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL}}
-          docker build --platform linux/amd64 --build-arg VERSION=v4 --secret id=WAGTAIL_USERNAME --secret id=WAGTAIL_PASSWORD --secret id=WAGTAIL_HOST --secret id=WAGTAIL_PORT --secret id=WAGTAIL_DBNAME --secret id=DJANGO_SUPERUSER_USERNAME --secret id=DJANGO_SUPERUSER_PASSWORD --secret id=DJANGO_SUPERUSER_EMAIL -t dattore/rda-web-test:v4 --no-cache .
+      - name: Build new version of the container
+        run: >
+          docker build --platform linux/amd64 --build-arg VERSION=$VERSION
+          --secret id=WAGTAIL_USERNAME --secret id=WAGTAIL_PASSWORD
+          --secret id=WAGTAIL_HOST --secret id=WAGTAIL_PORT --secret id=WAGTAIL_DBNAME
+          --secret id=DJANGO_SUPERUSER_USERNAME --secret id=DJANGO_SUPERUSER_PASSWORD
+          --secret id=DJANGO_SUPERUSER_EMAIL -t dattore/rda-web-test:$VERSION --no-cache .
