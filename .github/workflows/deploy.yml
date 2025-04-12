@@ -15,7 +15,7 @@ jobs:
       - name: Increment version number
         run: ((VERSION++))
       - name: Export the new version tag
-        run: export VERSION="v"$VERSION
+        run: echo "VERSION=$(export VERSION=v$VERSION)" >> $GITHUB_ENV
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Export secrets
