@@ -21,5 +21,5 @@ jobs:
         run: |
           export A=a
           export B=b
-          export C=$(( secrets.MY_SECRET }}
+          export C=${{ secrets.MY_SECRET }}
           echo "$A $B $C"
