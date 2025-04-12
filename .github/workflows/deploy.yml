@@ -15,10 +15,10 @@ jobs:
         run: echo "VERSION=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version' | cut -c2,10)" >> $GITHUB_OUTPUT
       - name: Increment version number
         id: new_version
-        run: echo "VERSION=$((${{ steps.last_version.output.VERSION }}+1))" >> $GITHUB_OUTPUT
+        run: echo "VERSION=$((${{ steps.last_version.outputs.VERSION }}+1))" >> $GITHUB_OUTPUT
       - name: Export the new version tag
         id: tag
-        run: echo "TAG=v$VERSION" >> $GITHUB_OUTPUT
+        run: echo "TAG=v${{ steps.new_version.outputs.VERSION }}" >> $GITHUB_OUTPUT
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Export secrets
@@ -35,9 +35,9 @@ jobs:
       - name: Build new version of the container
         run: >
           docker build --platform linux/amd64
-          --build-arg VERSION=${{ steps.tag.output.TAG }}
+          --build-arg VERSION=${{ steps.tag.outputs.TAG }}
           --secret id=WAGTAIL_USERNAME --secret id=WAGTAIL_PASSWORD
           --secret id=WAGTAIL_HOST --secret id=WAGTAIL_PORT --secret id=WAGTAIL_DBNAME
           --secret id=DJANGO_SUPERUSER_USERNAME --secret id=DJANGO_SUPERUSER_PASSWORD
           --secret id=DJANGO_SUPERUSER_EMAIL
-          -t dattore/rda-web-test:${{ steps.tag.output.TAG }} --no-cache .
+          -t dattore/rda-web-test:${{ steps.tag.outputs.TAG }} --no-cache .
