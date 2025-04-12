@@ -14,20 +14,20 @@ jobs:
         run: echo "VERSION=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version' | cut -c2,10)" >> $GITHUB_ENV
       - name: Increment version number
         run: ((VERSION++))
-      - name: Create new version tag
-        run: VERSION="v"$VERSION
+      - name: Export the new version tag
+        run: echo "VERSION=$(export VERSION="v"$VERSION)" >> $GITHUB_ENV
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Export secrets
         run: |
           echo "WAGTAIL_USERNAME=$(export WAGTAIL_USERNAME=${{ secrets.WAGTAIL_USERNAME }})" >> $GITHUB_ENV
           echo "WAGTAIL_PASSWORD=$(export WAGTAIL_PASSWORD=${{ secrets.WAGTAIL_PASSWORD }})" >> $GITHUB_ENV
-          echo "export WAGTAIL_HOST=${{ secrets.WAGTAIL_HOST }})" >> $GITHUB_ENV
-          echo "export WAGTAIL_DBNAME=${{ secrets.WAGTAIL_DBNAME }})" >> $GITHUB_ENV
-          echo "export WAGTAIL_PORT=${{ secrets.WAGTAIL_PORT }})" >> $GITHUB_ENV
-          echo "export DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }})" >> $GITHUB_ENV
-          echo "export DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }})" >> $GITHUB_ENV
-          echo "export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL}})" >> $GITHUB_ENV
+          echo "WAGTAIL_HOST=$(export WAGTAIL_HOST=${{ secrets.WAGTAIL_HOST }})" >> $GITHUB_ENV
+          echo "WAGTAIL_DBNAME=$(export WAGTAIL_DBNAME=${{ secrets.WAGTAIL_DBNAME }})" >> $GITHUB_ENV
+          echo "WAGTAIL_PORT=$(export WAGTAIL_PORT=${{ secrets.WAGTAIL_PORT }})" >> $GITHUB_ENV
+          echo "DJANGO_SUPERUSER_USERNAME=$(export DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }})" >> $GITHUB_ENV
+          echo "DJANGO_SUPERUSER_PASSWORD=$(export DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }})" >> $GITHUB_ENV
+          echo "DJANGO_SUPERUSER_EMAIL=$(export DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL}})" >> $GITHUB_ENV
       - name: Build new version of the container
         run: >
           docker build --platform linux/amd64 --build-arg VERSION=$VERSION
