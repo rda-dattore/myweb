@@ -8,6 +8,11 @@ jobs:
   container-rebuild:
     runs-on: ubuntu-latest
     steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Pull the latest image
         run: docker pull dattore/rda-web-test:latest
       - name: Get the latest version number
