@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM dattore/rda-web-test:webpkgs AS intermediate
 
 # set the version number
