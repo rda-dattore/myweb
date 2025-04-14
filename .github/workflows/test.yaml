@@ -18,4 +18,5 @@ jobs:
           mv app-chart/Chart.yaml.new app-chart/Chart.yaml
           git add app-chart/Chart.yaml
           git commit -m "increment version"
+          git status
           git push
