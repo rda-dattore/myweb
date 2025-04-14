@@ -46,7 +46,7 @@ jobs:
           --no-cache .
       - name: Push the new image to Docker Hub
         run: docker push dattore/rda-web-test:v${{ steps.new_version_number.outputs.VERSION_NUMBER }}
-      - name: Copy the new image to "latest"
+      - name: Copy the new image to "latest" tag
         run: docker tag dattore/rda-web-test:v${{ steps.new_version_number.outputs.VERSION_NUMBER}} dattore/rda-web-test:latest
-      - name: Push "latest" to Docker Hub
+      - name: Push "latest" tag to Docker Hub
         run: docker push dattore/rda-web-test:latest
