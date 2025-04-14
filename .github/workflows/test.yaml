@@ -19,4 +19,8 @@ jobs:
       - name: Junk4
         run: mv app-chart/Chart.yaml.new app-chart/Chart.yaml
       - name: Junk5
-        run: git status
+        run: git add app-chart/Chart.yaml
+      - name: Junk6
+        run: git commit -m "increment version"
+      - name: Junk7
+        run: git push
