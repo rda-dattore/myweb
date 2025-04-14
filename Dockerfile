@@ -31,10 +31,10 @@ EOF
 
 FROM dattore/rda-web-test:webpkgs
 
-# copy the repository from the intermediate image
-COPY --from=intermediate /tmp/myweb /usr/local/myweb
+# copy from the intermediate
 COPY --from=intermediate /tmp/version_number /usr/local/myweb/
 COPY --from=intermediate /tmp/get_version_number /usr/local/bin/
+COPY --from=intermediate /tmp/myweb /usr/local/myweb
 
 # create the local settings file
 RUN \
@@ -64,11 +64,12 @@ DJANGO_SUPERUSER = {
 EOFCAT
 EOF
 
-# add in new models, make sure superuser exists
+RUN pip install -r /usr/local/myweb/requirements.txt
+
+# create the final setup and run script
 RUN <<EOF
 cat <<EOFCAT > /usr/local/bin/start_web_server
 #! /bin/bash
-pip install -r /usr/local/myweb/requirements.txt
 /usr/local/myweb/manage.py makemigrations
 /usr/local/myweb/manage.py migrate
 /usr/local/myweb/manage.py collectstatic --noinput
