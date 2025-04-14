@@ -10,17 +10,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Junk1
-        run: git status
-      - name: Junk2
-        run: sed "s/0.1.1/0.1.2/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
-      - name: Junk3
-        run: ls app-chart/
-      - name: Junk4
-        run: mv app-chart/Chart.yaml.new app-chart/Chart.yaml
-      - name: Junk5
-        run: git add app-chart/Chart.yaml
-      - name: Junk6
-        run: git commit -m "increment version"
-      - name: Junk7
-        run: git push
+      - name: Update Chart.yaml
+        run: |
+          git status
+          sed "s/0.1.1/0.1.2/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
+          ls app-chart/
+          mv app-chart/Chart.yaml.new app-chart/Chart.yaml
+          git add app-chart/Chart.yaml
+          git commit -m "increment version"
+          git push
