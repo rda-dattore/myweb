@@ -44,3 +44,9 @@ jobs:
           --secret id=DJANGO_SUPERUSER_EMAIL
           -t dattore/rda-web-test:v${{ steps.new_version_number.outputs.VERSION_NUMBER }}
           --no-cache .
+      - name: Push the new image to Docker Hub
+        run: docker push dattore/rda-web-test:v${{ steps.new_version_number.outputs.VERSION_NUMBER }}
+      - name: Copy the new image to "latest"
+        run: docker tag dattore/rda-web-test:v${{ steps.new_version_number.outputs.VERSION_NUMBER}} dattore/rda-web-test:latest
+      - name: Push "latest" to Docker Hub
+        run: docker push dattore/rda-web-test:latest
