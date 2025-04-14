@@ -13,17 +13,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Get current version number from running webserver
+      - name: Try to get the current version number from the running webserver
         run: echo "VERSION_NUMBER=$(curl -s --max-time 30 -o - 'https://rda-web-test.k8s.ucar.edu/version/')" >> $GITHUB_ENV
-      - name: If webserver is unavailable, pull latest image
+      - name: If the webserver is unavailable, pull the latest image
         if: ${{ env.VERSION_NUMBER == '' }}
-        run: docker pull dattore/rda-web-test:latest
-      - name: Get current version number from latest image
-        if: ${{ env.VERSION_NUMBER == '' }}
-        run: echo "VERSION_NUMBER=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version_number')" >> $GITHUB_ENV
-      - name: Increment version number
+        run: |
+          docker pull dattore/rda-web-test:latest
+          echo "VERSION_NUMBER=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version_number')" >> $GITHUB_ENV
+      - name: Increment the version number
         run: echo "VERSION_NUMBER=$(($VERSION_NUMBER+1))" >> $GITHUB_ENV
-      - name: Checkout repository
+      - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Export secrets
         id: secrets
@@ -36,7 +35,7 @@ jobs:
           echo "DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}" >> $GITHUB_ENV
           echo "DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}" >> $GITHUB_ENV
           echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL}}" >> $GITHUB_ENV
-      - name: Build new version of container
+      - name: Build a new version of container
         run: >
           docker build --platform linux/amd64
           --build-arg VERSION_NUMBER=$VERSION_NUMBER
@@ -46,9 +45,8 @@ jobs:
           --secret id=DJANGO_SUPERUSER_EMAIL
           -t dattore/rda-web-test:v$VERSION_NUMBER
           --no-cache .
-      - name: Push new image to Docker Hub
-        run: docker push dattore/rda-web-test:v$VERSION_NUMBER
-      - name: Copy new image with "latest" tag
-        run: docker tag dattore/rda-web-test:v$VERSION_NUMBER dattore/rda-web-test:latest
-      - name: Push "latest" image to Docker Hub
-        run: docker push dattore/rda-web-test:latest
+      - name: Push the new image to Docker Hub
+        run: |
+          docker push dattore/rda-web-test:v$VERSION_NUMBER
+          docker tag dattore/rda-web-test:v$VERSION_NUMBER dattore/rda-web-test:latest
+          docker push dattore/rda-web-test:latest
