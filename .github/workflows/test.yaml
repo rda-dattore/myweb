@@ -13,6 +13,8 @@ jobs:
       - name: Update Chart.yaml
         run: |
           git init
+          git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
+          git config.user.email "${{ secrets.GIT_CONFIG_USER_EMAIL }}"
           git status
           sed "s/0.1.1/0.1.2/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
           ls app-chart/
