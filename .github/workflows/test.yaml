@@ -16,3 +16,7 @@ jobs:
         run: sed "s/0.1.1/0.1.2/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
       - name: Junk3
         run: ls app-chart/
+      - name: Junk4
+        run: mv app-chart/Chart.yaml.new app-chart/Chart.yaml
+      - name: Junk5
+        run: git status
