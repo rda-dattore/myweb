@@ -9,9 +9,14 @@ echo "'VERSION_NUMBER' environment variable is missing"; \
 exit 1; \
 fi
 RUN <<EOF
+cat <<EOFCAT > /tmp/version_number
+$VERSION_NUMBER
+EOFCAT
+EOF
+RUN <<EOF
 cat <<EOFCAT > /tmp/get_version_number
 # /bin/bash
-echo '$VERSION_NUMBER'
+cat /usr/local/myweb/version_number
 EOFCAT
 EOF
 RUN chmod 755 /tmp/get_version_number
@@ -28,6 +33,7 @@ FROM dattore/rda-web-test:webpkgs
 
 # copy the repository from the intermediate image
 COPY --from=intermediate /tmp/myweb /usr/local/myweb
+COPY --from=intermediate /tmp/version_number /usr/local/myweb/
 COPY --from=intermediate /tmp/get_version_number /usr/local/bin/
 
 # create the local settings file
@@ -60,13 +66,18 @@ EOF
 
 # add in new models, make sure superuser exists
 RUN <<EOF
+cat <<EOFCAT > /usr/local/bin/start_web_server
+#! /bin/bash
 pip install -r /usr/local/myweb/requirements.txt
 /usr/local/myweb/manage.py makemigrations
 /usr/local/myweb/manage.py migrate
 /usr/local/myweb/manage.py collectstatic --noinput
 python3.12 /usr/local/myweb/manage.py ensuresuperuser
+gunicorn --bind 0.0.0.0:443 --workers 4 mywebserver.wsgi
+EOFCAT
 EOF
+RUN chmod 755 /usr/local/bin/start_web_server
 
 # start gunicorn
 ENV PYTHONPATH=/usr/local/myweb
-CMD ["gunicorn", "--bind", "0.0.0.0:443", "--workers", "4", "mywebserver.wsgi"]
+CMD ["/usr/local/bin/start_web_server"]
