@@ -12,3 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Junk1
         run: git status
+      - name: Junk2
+        run: sed "s/0.1.1/0.1.2/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
+      - name: Junk3
+        run: ls app-chart/
