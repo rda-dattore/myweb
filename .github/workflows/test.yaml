@@ -1,0 +1,14 @@
+on:
+  push:
+    paths-ignore:
+      - ".github/**"
+      - "app-chart/**"
+
+jobs:
+  container-rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Junk1
+        run: git status
