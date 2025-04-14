@@ -16,10 +16,10 @@ jobs:
       - name: Get current version number from running webserver
         run: echo "VERSION_NUMBER=$(curl -o - 'https://rda-web-test.k8s.ucar.edu/version/')" >> $GITHUB_ENV
       - name: If webserver is unavailable, pull latest image
-        if: ${{ $VERSION_NUMBER == ""}}
+        if: ${{ env.VERSION_NUMBER == "" }}
         run: docker pull dattore/rda-web-test:latest
       - name: Get current version number from latest image
-        if: $VERSION_NUMBER == ""
+        if: ${{ env.VERSION_NUMBER == "" }}
         run: echo "VERSION_NUMBER=$(docker run dattore/rda-web-test /bin/bash -c '/usr/local/bin/get_version_number')" >> $GITHUB_ENV
       - name: Increment version number
         run: echo "VERSION_NUMBER=$(($VERSION_NUMBER+1))" >> $GITHUB_ENV
