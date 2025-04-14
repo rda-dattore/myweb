@@ -16,6 +16,8 @@ jobs:
           sed "s/0.1.1/0.1.2/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
           ls app-chart/
           mv app-chart/Chart.yaml.new app-chart/Chart.yaml
+          ls app-chart/
+          git status
           git add app-chart/Chart.yaml
           git commit -m "increment version"
           git status
