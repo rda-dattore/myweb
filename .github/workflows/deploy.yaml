@@ -51,3 +51,4 @@ jobs:
           docker push dattore/rda-web-test:v$VERSION_NUMBER
           docker tag dattore/rda-web-test:v$VERSION_NUMBER dattore/rda-web-test:latest
           docker push dattore/rda-web-test:latest
+      - name: Update the Helm chart
