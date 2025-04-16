@@ -9,17 +9,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Update Chart.yaml
+      - name: Update values.yaml
         run: |
           git config user.email "${{ secrets.GIT_CONFIG_USER_EMAIL }}"
           git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
           git status
-          sed "s/0.1.5/0.1.6/" app-chart/Chart.yaml > app-chart/Chart.yaml.new
+          sed -E "/image/s/rda-web-test:(.){1,}/rda-web-test:v999/" app-chart/values.yaml > app-chart/values.yaml.new
           ls app-chart/
-          mv app-chart/Chart.yaml.new app-chart/Chart.yaml
+          mv app-chart/values.yaml.new app-chart/values.yaml
           ls app-chart/
           git status
-          git add app-chart/Chart.yaml
+          git add app-chart/values.yaml
           git commit -m "increment version"
           git status
           git push
