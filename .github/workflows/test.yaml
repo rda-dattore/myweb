@@ -1,7 +1,7 @@
 on:
   push:
     paths:
-      - "app-chart/**"
+      - "new-app-chart/Chart.yaml"
 
 jobs:
   container-rebuild:
@@ -14,12 +14,12 @@ jobs:
           git config user.email "${{ secrets.GIT_CONFIG_USER_EMAIL }}"
           git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
           git status
-          sed -E "/image/s/rda-web-test:(.){1,}/rda-web-test:v999/" app-chart/values.yaml > app-chart/values.yaml.new
-          ls app-chart/
-          mv app-chart/values.yaml.new app-chart/values.yaml
-          ls app-chart/
+          sed -E "/image/s/rda-web-test:(.){1,}/rda-web-test:v999/" new-app-chart/values.yaml > new-app-chart/values.yaml.new
+          ls new-app-chart/
+          mv new-app-chart/values.yaml.new new-app-chart/values.yaml
+          ls new-app-chart/
           git status
-          git add app-chart/values.yaml
+          git add new-app-chart/values.yaml
           git commit -m "increment version"
           git status
           git push
