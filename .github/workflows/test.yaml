@@ -1,7 +1,6 @@
 on:
   push:
     paths:
-      - ".github/**"
       - "app-chart/**"
 
 jobs:
