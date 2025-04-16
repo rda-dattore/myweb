@@ -55,3 +55,5 @@ jobs:
         run: |
           git config user.email "${{ secrets.GIT_CONFIG_USER_EMAIL }}"
           git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
+          sed -E "/image/s/rda-web-test:(.){1,}/rda-web-test:v$VERSION_NUMBER/" new-app-chart/values.yaml > new-app-chart/values.yaml.new
+
