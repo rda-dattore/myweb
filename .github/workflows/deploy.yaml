@@ -3,6 +3,7 @@ on:
     paths-ignore:
       - ".github/**"
       - "app-chart/**"
+      - "new-app-chart/**"
 
 jobs:
   container-rebuild:
