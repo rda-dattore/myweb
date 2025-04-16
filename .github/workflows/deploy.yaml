@@ -52,3 +52,6 @@ jobs:
           docker tag dattore/rda-web-test:v$VERSION_NUMBER dattore/rda-web-test:latest
           docker push dattore/rda-web-test:latest
       - name: Update the Helm chart
+        run: |
+          git config user.email "${{ secrets.GIT_CONFIG_USER_EMAIL }}"
+          git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
