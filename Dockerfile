@@ -22,6 +22,7 @@ EOF
 RUN chmod 755 /tmp/get_version_number
 
 RUN <<EOF
+apt-get update -y
 apt-get install -y git
 mkdir /tmp/myweb
 git clone https://github.com/rda-dattore/myweb.git /tmp/myweb

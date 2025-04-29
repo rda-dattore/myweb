@@ -1,0 +1,25 @@
+on:
+  push:
+    paths:
+      - "new-app-chart/Chart.yaml"
+
+jobs:
+  container-rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Update values.yaml
+        run: |
+          git config user.email "${{ secrets.GIT_CONFIG_USER_EMAIL }}"
+          git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
+          git status
+          sed -E "/image/s/rda-web-test:(.){1,}/rda-web-test:v999/" new-app-chart/values.yaml > new-app-chart/values.yaml.new
+          ls new-app-chart/
+          mv new-app-chart/values.yaml.new new-app-chart/values.yaml
+          ls new-app-chart/
+          git status
+          git add new-app-chart/values.yaml
+          git commit -m "increment version"
+          git status
+          git push
