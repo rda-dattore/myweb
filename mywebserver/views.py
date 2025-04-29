@@ -6,3 +6,7 @@ def show_version(request):
         version_number = f.read()
 
     return HttpResponse(version_number)
+
+
+def php(request, path):
+    return HttpResponse("PATH: " + str(path))
