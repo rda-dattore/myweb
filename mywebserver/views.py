@@ -1,3 +1,5 @@
+import subprocess
+
 from django.http import HttpResponse
 
 
@@ -9,4 +11,10 @@ def show_version(request):
 
 
 def php(request, script):
-    return HttpResponse("PATH: " + str(script))
+    o = subprocess.run("/usr/bin/php /usr/local/myweb/" + script, shell=True,
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse(o.stdout.decode("utf-8"))
