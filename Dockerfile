@@ -15,7 +15,7 @@ EOFCAT
 EOF
 RUN <<EOF
 cat <<EOFCAT > /tmp/get_version_number
-# /bin/bash
+#! /bin/bash
 cat /usr/local/myweb/version_number
 EOFCAT
 EOF
