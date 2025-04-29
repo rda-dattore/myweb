@@ -8,5 +8,5 @@ def show_version(request):
     return HttpResponse(version_number)
 
 
-def php(request, path):
-    return HttpResponse("PATH: " + str(path))
+def php(request, script):
+    return HttpResponse("PATH: " + str(script))

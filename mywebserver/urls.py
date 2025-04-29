@@ -15,7 +15,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     path("version/", views.show_version),
-    re_path(r"^(.*)\.php$", views.php),
+    re_path(r"^(.*\.php)$", views.php),
 ]
 
 
