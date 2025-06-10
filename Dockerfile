@@ -1,87 +1,126 @@
 # syntax=docker/dockerfile:1
 
-FROM dattore/rda-web-test:webpkgs AS intermediate
+FROM dattore/gdex-web-portal:python
 
-# set the version number
-ARG VERSION_NUMBER=
-RUN if [ -z "$VERSION_NUMBER"]; then \
-echo "'VERSION_NUMBER' environment variable is missing"; \
-exit 1; \
-fi
+# create and activate virtual environment
+RUN python3.11 -m venv /usr/local/gdexweb
+ENV PATH=/usr/local/gdexweb/bin:$PATH
+
+# install and set up wagtail
+RUN pip install wagtail==7.0 Django==5.2 wagtailmenus==3.1.9
+RUN wagtail start gdexwebserver /usr/local/gdexweb
+RUN pip install -r /usr/local/gdexweb/requirements.txt
+RUN python /usr/local/gdexweb/manage.py makemigrations
+RUN python /usr/local/gdexweb/manage.py migrate
+RUN python /usr/local/gdexweb/manage.py collectstatic --noinput
+
+# install database tools
+RUN apt-get install -y libpq-dev postgresql
+RUN pip install psycopg2
+
+# install the web tools
+RUN apt-get install -y apache2 apache2-dev
+RUN apt-get install -y php php-cli php-pgsql
+RUN pip install mod_wsgi
+RUN ln -s /usr/local/gdexweb/lib/python3.11/site-packages/mod_wsgi/server/mod_wsgi-py311.cpython-311-x86_64-linux-gnu.so /usr/lib/apache2/modules/mod_wsgi_python3.11.so
+
+# create the apache configuration
+RUN mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.dist
 RUN <<EOF
-cat <<EOFCAT > /tmp/version_number
-$VERSION_NUMBER
+cat <<EOFCAT> /etc/apache2/apache2.conf
+ServerRoot "/etc/apache2"
+ServerName gdexweb.ucar.edu
+
+DefaultRuntimeDir \${APACHE_RUN_DIR}
+
+PidFile \${APACHE_PID_FILE}
+
+Timeout 300
+
+KeepAlive On
+
+MaxKeepAliveRequests 100
+
+KeepAliveTimeout 5
+
+User \${APACHE_RUN_USER}
+Group \${APACHE_RUN_GROUP}
+
+HostnameLookups Off
+
+ErrorLog \${APACHE_LOG_DIR}/error.log
+LogLevel warn
+LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined
+LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
+LogFormat "%h %l %u %t \"%r\" %>s %O" common
+LogFormat "%{Referer}i -> %U" referer
+LogFormat "%{User-agent}i" agent
+
+IncludeOptional mods-enabled/*.load
+IncludeOptional mods-enabled/*.conf
+
+Include ports.conf
+
+<Directory />
+        Options FollowSymLinks
+        AllowOverride None
+        Require all denied
+</Directory>
+<Directory /usr/share>
+        AllowOverride None
+        Require all granted
+</Directory>
+
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+
+AccessFileName .htaccess
+<FilesMatch "^\.ht">
+        Require all denied
+</FilesMatch>
+
+IncludeOptional conf-enabled/*.conf
+
+IncludeOptional sites-enabled/*.conf
+
 EOFCAT
 EOF
-RUN <<EOF
-cat <<EOFCAT > /tmp/get_version_number
-#! /bin/bash
-cat /usr/local/myweb/version_number
-EOFCAT
-EOF
-RUN chmod 755 /tmp/get_version_number
 
 RUN <<EOF
-apt-get update -y
-apt-get install -y git
-mkdir /tmp/myweb
-git clone https://github.com/rda-dattore/myweb.git /tmp/myweb
-EOF
-#ADD git@github.com:rda-dattore/myweb.git /tmp/myweb
-
-
-FROM dattore/rda-web-test:webpkgs
-
-# copy from the intermediate
-COPY --from=intermediate /tmp/version_number /usr/local/myweb/
-COPY --from=intermediate /tmp/get_version_number /usr/local/bin/
-COPY --from=intermediate /tmp/myweb /usr/local/myweb
-
-# create the local settings file
-RUN \
---mount=type=secret,id=WAGTAIL_USERNAME,env=WAGTAIL_USERNAME \
---mount=type=secret,id=WAGTAIL_PASSWORD,env=WAGTAIL_PASSWORD \
---mount=type=secret,id=WAGTAIL_HOST,env=WAGTAIL_HOST \
---mount=type=secret,id=WAGTAIL_DBNAME,env=WAGTAIL_DBNAME \
---mount=type=secret,id=WAGTAIL_PORT,env=WAGTAIL_PORT \
---mount=type=secret,id=DJANGO_SUPERUSER_USERNAME,env=DJANGO_SUPERUSER_USERNAME \
---mount=type=secret,id=DJANGO_SUPERUSER_PASSWORD,env=DJANGO_SUPERUSER_PASSWORD \
---mount=type=secret,id=DJANGO_SUPERUSER_EMAIL,env=DJANGO_SUPERUSER_EMAIL \
-<<EOF
-cat <<EOFCAT > /usr/local/myweb/mywebserver/settings/local_settings.py
-wagtail_config = {
-    'user': "$WAGTAIL_USERNAME",
-    'password': "$WAGTAIL_PASSWORD",
-    'host': "$WAGTAIL_HOST",
-    'dbname': "$WAGTAIL_DBNAME",
-    'port': "$WAGTAIL_PORT",
-}
-
-DJANGO_SUPERUSER = {
-    'username': "$DJANGO_SUPERUSER_USERNAME",
-    'email': "$DJANGO_SUPERUSER_EMAIL",
-    'password': "$DJANGO_SUPERUSER_PASSWORD",
-}
+cat <<EOFCAT> /etc/apache2/mods-enabled/wsgi.load
+LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi_python3.11.so
 EOFCAT
 EOF
 
-RUN pip install -r /usr/local/myweb/requirements.txt
-
-# create the final setup and run script
+RUN mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.dist
 RUN <<EOF
-cat <<EOFCAT > /usr/local/bin/start_web_server
-#! /bin/bash
-/usr/local/myweb/manage.py makemigrations
-/usr/local/myweb/manage.py migrate
-/usr/local/myweb/manage.py collectstatic --noinput
-python3.12 /usr/local/myweb/manage.py ensuresuperuser
-gunicorn --bind 0.0.0.0:443 --workers 4 mywebserver.wsgi
+cat <<EOFCAT> /etc/apache2/sites-enabled/000-default.conf
+<VirtualHost *:80>
+        ServerAdmin rdahelp@ucar.edu
+        DocumentRoot /usr/local/gdexweb
+
+        <Directory /usr/local/gdexweb>
+            Require all granted
+        </Directory>
+
+        IncludeOptional conf-enabled/aliases.conf
+
+        WSGIDaemonProcess gdexweb python-path=/usr/local/gdexweb:/usr/local/gdexweb/lib/python3.11/site-packages request-timeout=180
+        WSGIScriptAlias / /usr/local/gdexweb/gdexwebserver/wsgi.py
+        WSGIProcessGroup gdexweb
+        WSGIApplicationGroup %{GLOBAL}
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
 EOFCAT
 EOF
-RUN chmod 755 /usr/local/bin/start_web_server
 
 RUN mkdir /data
 
-# start gunicorn
-ENV PYTHONPATH=/usr/local/myweb
-CMD ["/usr/local/bin/start_web_server"]
+# start the apache web server
+CMD ["apache2ctl", "-D", "FOREGROUND"]
