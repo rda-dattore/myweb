@@ -7,6 +7,11 @@ webapp:
   tls:
     fqdn: rda-web-test.k8s.ucar.edu
     secretName: incommon-cert-rda-web-test
+  volume:
+    fs:
+      name: gdexdata
+      size: 50Gi
+      mountPath: /data
   container: 
     image: docker.io/dattore/rda-web-test:v114
     port: 443
