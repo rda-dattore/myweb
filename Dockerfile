@@ -80,6 +80,8 @@ EOFCAT
 EOF
 RUN chmod 755 /usr/local/bin/start_web_server
 
+RUN mkdir /data
+
 # start gunicorn
 ENV PYTHONPATH=/usr/local/myweb
 CMD ["/usr/local/bin/start_web_server"]
