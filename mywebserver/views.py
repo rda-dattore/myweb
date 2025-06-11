@@ -6,7 +6,7 @@ from django.http import HttpResponse
 def write_data(request):
     try:
         with open("/data/test.txt", "w") as f:
-            f.write("data test 17")
+            f.write("data test 18801938234")
             
     except Exception as err:
         return HttpResponse("There was an error: " + str(err))

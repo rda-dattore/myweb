@@ -137,7 +137,7 @@ RUN chown www-data:www-data /var/log/django.log
 
 RUN <<EOF
 cat <<EOFCAT > /usr/local/gdexweb/version_number
-16
+18
 EOFCAT
 EOF
 RUN <<EOF
