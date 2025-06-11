@@ -149,6 +149,7 @@ apt-get install -y git
 mkdir /tmp/gdexweb
 git clone https://github.com/rda-dattore/myweb.git /tmp/myweb
 cp /tmp/myweb/mywebserver/urls.py /usr/local/gdexweb/gdexwebserver/
+cp /tmp/myweb/mywebserver/views.py /usr/local/gdexweb/gdexwebserver/
 EOF
 
 RUN mkdir /usr/local/gdexweb/statictest
