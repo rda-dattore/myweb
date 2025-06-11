@@ -2,6 +2,13 @@ import subprocess
 
 from django.http import HttpResponse
 
+def df(request):
+    pass
+
+
+def root_ls(request):
+    pass
+
 
 def write_data(request):
     try:
