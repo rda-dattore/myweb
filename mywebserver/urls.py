@@ -16,6 +16,7 @@ urlpatterns = [
     path("search/", search_views.search, name="search"),
     path("version/", views.show_version),
     re_path(r"^(.*\.php)$", views.php),
+    path("write-data/", views.write_data),
 ]
 
 
