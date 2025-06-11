@@ -153,7 +153,7 @@ EOF
 
 RUN mkdir /usr/local/gdexweb/statictest
 RUN <<EOF
-RUN <<EOFCAT> /usr/local/gdexweb/statictest/test.txt
+cat <<EOFCAT> /usr/local/gdexweb/statictest/test.txt
 hello statictest
 EOFCAT
 EOF
