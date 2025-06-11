@@ -108,6 +108,10 @@ cat <<EOFCAT> /etc/apache2/sites-enabled/000-default.conf
         </Directory>
 
         Alias /statictest /usr/local/gdexweb/statictest
+        Alias /data /data
+        <Directory /data>
+            Require all granted
+        </Directory>
 
         IncludeOptional conf-enabled/aliases.conf
 
@@ -125,6 +129,12 @@ EOF
 
 RUN mkdir /data
 RUN chown www-data:www-data /data
+RUN <<EOF
+cat <<EOFCAT> /data/test.txt
+hello /data test
+EOFCAT
+EOF
+
 # set permissions
 RUN chown -R www-data:www-data /usr/local/gdexweb
 RUN touch /var/log/django.log
@@ -132,7 +142,7 @@ RUN chown www-data:www-data /var/log/django.log
 
 RUN <<EOF
 cat <<EOFCAT > /usr/local/gdexweb/version_number
-12
+16
 EOFCAT
 EOF
 RUN <<EOF
