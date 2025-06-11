@@ -17,6 +17,8 @@ urlpatterns = [
     path("version/", views.show_version),
     re_path(r"^(.*\.php)$", views.php),
     path("write-data/", views.write_data),
+    path("df/", views.df),
+    path("rootls/", views.root_ls),
 ]
 
 
