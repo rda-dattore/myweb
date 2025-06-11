@@ -128,5 +128,9 @@ RUN chown -R www-data:www-data /usr/local/gdexweb
 RUN touch /var/log/django.log
 RUN chown www-data:www-data /var/log/django.log
 
+RUN pip install gunicorn
+ENV PYTHONPATH=/usr/local/gdexweb
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "4", "gdexwebserver.wsgi"]
+
 # start the apache web server
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+#CMD ["apache2ctl", "-D", "FOREGROUND"]
