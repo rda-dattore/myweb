@@ -128,5 +128,25 @@ RUN chown -R www-data:www-data /usr/local/gdexweb
 RUN touch /var/log/django.log
 RUN chown www-data:www-data /var/log/django.log
 
+RUN <<EOF
+cat <<EOFCAT > /usr/local/gdexweb/version_number
+12
+EOFCAT
+EOF
+RUN <<EOF
+cat <<EOFCAT > /usr/local/bin/get_version_number
+#! /bin/bash
+cat /usr/local/gdexweb/version_number
+EOFCAT
+EOF
+RUN chmod 755 /usr/local/bin/get_version_number
+
+RUN <<EOF
+apt-get update -y
+apt-get install -y git
+mkdir /tmp/gdexweb
+git clone https://github.com/NCAR/gdex-web-portal.git /tmp/gdexweb
+EOF
+
 # start the apache web server
 CMD ["apache2ctl", "-D", "FOREGROUND"]
