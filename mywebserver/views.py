@@ -2,6 +2,25 @@ import subprocess
 
 from django.http import HttpResponse
 
+def df(request):
+    o = subprocess.run("/usr/bin/df", shell=True,
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse(o.stdout.decode("utf-8"))
+
+
+def root_ls(request):
+    o = subprocess.run("/usr/bin/ls -lt /", shell=True,
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse(o.stdout.decode("utf-8"))
+
 
 def write_data(request):
     try:
