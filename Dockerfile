@@ -129,11 +129,6 @@ EOF
 
 RUN mkdir /data
 RUN chown www-data:www-data /data
-RUN <<EOF
-cat <<EOFCAT> /data/test.txt
-hello /data test
-EOFCAT
-EOF
 
 # set permissions
 RUN chown -R www-data:www-data /usr/local/gdexweb
