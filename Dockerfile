@@ -30,6 +30,7 @@ RUN <<EOF
 cat <<EOFCAT> /etc/apache2/apache2.conf
 ServerRoot "/etc/apache2"
 ServerName gdexweb.ucar.edu
+Listen 0.0.0.0:80
 
 DefaultRuntimeDir \${APACHE_RUN_DIR}
 
