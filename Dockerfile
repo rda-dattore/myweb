@@ -30,7 +30,6 @@ RUN <<EOF
 cat <<EOFCAT> /etc/apache2/apache2.conf
 ServerRoot "/etc/apache2"
 ServerName gdexweb.ucar.edu
-Listen 0.0.0.0:80
 
 DefaultRuntimeDir \${APACHE_RUN_DIR}
 
@@ -122,6 +121,10 @@ EOFCAT
 EOF
 
 RUN mkdir /data
+RUN chown www-data:www-data /data
+# set permissions
+RUN chown -R www-data:www-data /usr/local/gdexweb
+RUN chown www-data:www-data /var/log/django.log
 
 # start the apache web server
 CMD ["apache2ctl", "-D", "FOREGROUND"]
