@@ -124,6 +124,7 @@ RUN mkdir /data
 RUN chown www-data:www-data /data
 # set permissions
 RUN chown -R www-data:www-data /usr/local/gdexweb
+RUN touch /var/log/django.log
 RUN chown www-data:www-data /var/log/django.log
 
 # start the apache web server
