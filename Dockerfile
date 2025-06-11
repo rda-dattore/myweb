@@ -30,7 +30,7 @@ RUN <<EOF
 cat <<EOFCAT> /etc/apache2/apache2.conf
 ServerRoot "/etc/apache2"
 ServerName gdexweb.ucar.edu
-Listen 0.0.0.0:443
+Listen 0.0.0.0:8080
 
 DefaultRuntimeDir \${APACHE_RUN_DIR}
 
@@ -99,7 +99,7 @@ EOF
 RUN mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.dist
 RUN <<EOF
 cat <<EOFCAT> /etc/apache2/sites-enabled/000-default.conf
-<VirtualHost *:443>
+<VirtualHost *:8080>
         ServerAdmin rdahelp@ucar.edu
         DocumentRoot /usr/local/gdexweb
 
