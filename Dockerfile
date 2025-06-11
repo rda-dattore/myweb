@@ -107,6 +107,8 @@ cat <<EOFCAT> /etc/apache2/sites-enabled/000-default.conf
             Require all granted
         </Directory>
 
+        Alias /statictest /usr/local/gdexweb/statictest
+
         IncludeOptional conf-enabled/aliases.conf
 
         WSGIDaemonProcess gdexweb python-path=/usr/local/gdexweb:/usr/local/gdexweb/lib/python3.11/site-packages request-timeout=180
@@ -145,7 +147,15 @@ RUN <<EOF
 apt-get update -y
 apt-get install -y git
 mkdir /tmp/gdexweb
-git clone https://github.com/NCAR/gdex-web-portal.git /tmp/gdexweb
+git clone https://github.com/rda-dattore/myweb.git /tmp/myweb
+cp /tmp/myweb/mywebserver/urls.py /usr/local/gdexweb/gdexwebserver/
+EOF
+
+RUN mkdir /usr/local/gdexweb/statictest
+RUN <<EOF
+RUN <<EOFCAT> /usr/local/gdexweb/statictest/test.txt
+hello statictest
+EOFCAT
 EOF
 
 # start the apache web server
