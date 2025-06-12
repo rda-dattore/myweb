@@ -9,7 +9,7 @@ def df(request):
     if len(err) > 0:
         return HttpResponse("ERROR: " + str(err))
 
-    return HttpResponse(o.stdout.decode("utf-8"))
+    return HttpResponse(o.stdout.decode("utf-8").replace("\n", "<br>"))
 
 
 def root_ls(request):
@@ -19,7 +19,7 @@ def root_ls(request):
     if len(err) > 0:
         return HttpResponse("ERROR: " + str(err))
 
-    return HttpResponse(o.stdout.decode("utf-8"))
+    return HttpResponse(o.stdout.decode("utf-8").replace("\n", "<br>"))
 
 
 def write_data(request):
