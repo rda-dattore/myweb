@@ -13,7 +13,7 @@ webapp:
       size: 50Gi
       mountPath: /data
   container: 
-    image: docker.io/dattore/rda-web-test:v22
+    image: docker.io/dattore/rda-web-test:v23
     port: 8080
     memory: 1G
     cpu: 2
