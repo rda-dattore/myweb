@@ -159,13 +159,13 @@ EOF
 
 RUN mkdir /usr/local/gdexweb/statictest
 RUN <<EOF
-cat <<EOFCAT> /usr/local/gdexweb/statictest/test.txt
+cat <<EOFCAT > /usr/local/gdexweb/statictest/test.txt
 hello statictest
 EOFCAT
 EOF
 
-RUN << EOF
-cat <<EOFCAT> /usr/local/bin/start_container
+RUN <<EOF
+cat <<EOFCAT > /usr/local/bin/start_container
 #! /bin/bash
 chown -R www-data:www-data /data
 apache2ctl -D FOREGROUND
