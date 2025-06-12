@@ -24,8 +24,8 @@ def root_ls(request):
 
 def write_data(request):
     try:
-        with open("/data/test.txt", "w") as f:
-            f.write("data test 18801938234")
+        with open("/data/test2.txt", "w") as f:
+            f.write("data test ABC")
             
     except Exception as err:
         return HttpResponse("There was an error: " + str(err))
