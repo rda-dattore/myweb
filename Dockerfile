@@ -129,6 +129,8 @@ EOF
 
 RUN mkdir /data
 RUN chown -R www-data:www-data /data
+RUN mkdir /data2
+RUN chown -R www-data:www-data /data2
 
 # set permissions
 RUN chown -R www-data:www-data /usr/local/gdexweb
