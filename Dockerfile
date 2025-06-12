@@ -127,8 +127,6 @@ cat <<EOFCAT> /etc/apache2/sites-enabled/000-default.conf
 EOFCAT
 EOF
 
-RUN mkdir /data
-RUN chown -R www-data:www-data /data
 RUN mkdir /data2
 RUN chown -R www-data:www-data /data2
 
@@ -139,7 +137,7 @@ RUN chown www-data:www-data /var/log/django.log
 
 RUN <<EOF
 cat <<EOFCAT > /usr/local/gdexweb/version_number
-23
+24
 EOFCAT
 EOF
 RUN <<EOF
