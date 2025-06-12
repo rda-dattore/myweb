@@ -128,6 +128,7 @@ EOFCAT
 EOF
 
 RUN mkdir /data
+RUN chown -R www-data:www-data /data
 
 # set permissions
 RUN chown -R www-data:www-data /usr/local/gdexweb
@@ -136,7 +137,7 @@ RUN chown www-data:www-data /var/log/django.log
 
 RUN <<EOF
 cat <<EOFCAT > /usr/local/gdexweb/version_number
-21
+22
 EOFCAT
 EOF
 RUN <<EOF
