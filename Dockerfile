@@ -137,7 +137,7 @@ RUN chown www-data:www-data /var/log/django.log
 
 RUN <<EOF
 cat <<EOFCAT > /usr/local/gdexweb/version_number
-24
+25
 EOFCAT
 EOF
 RUN <<EOF
@@ -164,5 +164,14 @@ hello statictest
 EOFCAT
 EOF
 
+RUN << EOF
+cat <<EOFCAT> /usr/local/bin/start_container
+#! /bin/bash
+chown -R www-data:www-data /data
+apache2ctl -D FOREGROUND
+EOFCAT
+EOF
+RUN chmod 755 /usr/local/bin/start_container
+
 # start the apache web server
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["/usr/local/bin/start_container"]
