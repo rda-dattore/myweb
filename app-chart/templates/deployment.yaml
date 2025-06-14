@@ -21,6 +21,10 @@ spec:
         persistentVolumeClaim:
           claimName: {{ .Values.webapp.volume.fs.name }}
       - name: {{ .Values.webapp.volume.glade.name }}
+        nfs:
+          server: {{ .Values.webapp.volume.glade.server }}
+          path: {{ .Values.webapp.volume.glade.path }}
+          readOnly: {{ .Values.webapp.volume.glade.readOnly }}
       containers:
       - name: {{ .Values.webapp.name }}
         image: {{ .Values.webapp.container.image }}
