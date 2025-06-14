@@ -12,6 +12,11 @@ webapp:
       name: gdexdata
       size: 50Gi
       mountPath: /data
+    glade:
+      name: glade_campaign
+      server: gladedm1.ucar.edu
+      path: /gpfs/csfs1
+      readOnly: true
   container: 
     image: docker.io/dattore/rda-web-test:v27
     port: 8080
