@@ -16,6 +16,7 @@ webapp:
       name: glade-campaign
       server: gladedm1.ucar.edu
       path: /gpfs/csfs1
+      mountPath: /glade/campaign
       readOnly: true
   container: 
     image: docker.io/dattore/rda-web-test:v27
