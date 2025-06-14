@@ -20,6 +20,7 @@ spec:
       - name: {{ .Values.webapp.volume.fs.name }}
         persistentVolumeClaim:
           claimName: {{ .Values.webapp.volume.fs.name }}
+      - name: {{ .Values.webapp.volume.glade.name }}
       containers:
       - name: {{ .Values.webapp.name }}
         image: {{ .Values.webapp.container.image }}
