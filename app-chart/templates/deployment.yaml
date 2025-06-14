@@ -37,3 +37,5 @@ spec:
         volumeMounts:
         - mountPath: {{ .Values.webapp.volume.fs.mountPath }}
           name: {{ .Values.webapp.volume.fs.name }}
+        - mountPath: {{ .Values.webapp.volume.glade.mountPath }}
+          name: {{ .Values.webapp.volume.glade.name }}
