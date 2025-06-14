@@ -13,7 +13,7 @@ webapp:
       size: 50Gi
       mountPath: /data
     glade:
-      name: glade_campaign
+      name: glade-campaign
       server: gladedm1.ucar.edu
       path: /gpfs/csfs1
       readOnly: true
