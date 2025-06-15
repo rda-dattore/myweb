@@ -22,6 +22,16 @@ def root_ls(request):
     return HttpResponse(o.stdout.decode("utf-8").replace("\n", "<br>"))
 
 
+def glade_ls(request):
+    o = subprocess.run("/usr/bin/ls -lt /glade/campaign/collections/rda/work/dattore/cfsr/cfs_oper/", shell=True,
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse(o.stdout.decode("utf-8").replace("\n", "<br>"))
+
+
 def write_data(request):
     try:
         with open("/data/test2.txt", "w") as f:

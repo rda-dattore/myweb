@@ -19,6 +19,7 @@ urlpatterns = [
     path("write-data/", views.write_data),
     path("df/", views.df),
     path("root-ls/", views.root_ls),
+    path("glade-ls/", views.glade_ls),
 ]
 
 
