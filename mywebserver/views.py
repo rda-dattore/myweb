@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 from django.http import HttpResponse
@@ -60,4 +61,10 @@ def php(request, script):
 
 
 def data_ls(request, path):
-    pass
+    o = subprocess.run("/usr/bin/ls -lt " + os.path.join("data", path), shell=True,
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse(o.stdout.decode("utf-8"))
