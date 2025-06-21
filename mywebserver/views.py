@@ -23,8 +23,8 @@ def root_ls(request):
     return HttpResponse(o.stdout.decode("utf-8").replace("\n", "<br>"))
 
 
-def glade_ls(request):
-    o = subprocess.run("/usr/bin/ls -lt /glade/campaign/collections/rda/work/dattore/cfsr/cfs_oper/", shell=True,
+def glade_ls(request, path):
+    o = subprocess.run("/usr/bin/ls -lt os.path.join("/glade/campaign/collections/rda/work/dattore/data", path), shell=True,
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     err = o.stderr.decode("utf-8")
     if len(err) > 0:
