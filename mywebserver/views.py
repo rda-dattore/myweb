@@ -68,3 +68,7 @@ def data_ls(request, path):
         return HttpResponse("ERROR: " + str(err))
 
     return HttpResponse(o.stdout.decode("utf-8"))
+
+
+def glade_cp(request, path):
+    pass
