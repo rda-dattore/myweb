@@ -20,6 +20,7 @@ urlpatterns = [
     path("df/", views.df),
     path("root-ls/", views.root_ls),
     path("glade-ls/", views.glade_ls),
+    re_path(r"data-ls/(.*)$", views.data_ls),
 ]
 
 
