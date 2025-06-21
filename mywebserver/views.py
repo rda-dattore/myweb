@@ -57,3 +57,7 @@ def php(request, script):
         return HttpResponse("ERROR: " + str(err))
 
     return HttpResponse(o.stdout.decode("utf-8"))
+
+
+def data_ls(request, path):
+    pass
