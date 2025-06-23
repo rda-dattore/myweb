@@ -67,11 +67,11 @@ def data_ls(request, path):
     if len(err) > 0:
         return HttpResponse("ERROR: " + str(err))
 
-    return HttpResponse(o.stdout.decode("utf-8"))
+    return HttpResponse(o.stdout.decode("utf-8").replace("\n", "<br>"))
 
 
 def glade_cp(request, path):
-    o = subprocess.run("/usr/bin/cp -r " + os.path.join("/glade/campaign/collections/rda/work/dattore/data", path) + "/data/",
+    o = subprocess.run("/usr/bin/cp -r " + os.path.join("/glade/campaign/collections/rda/work/dattore/data", path) + " /data/",
                        shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     err = o.stderr.decode("utf-8")
     if len(err) > 0:
