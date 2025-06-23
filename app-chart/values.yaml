@@ -6,7 +6,7 @@ sshapp:
   volume:
     fs:
       name: gdexdata
-      size: 50 Gi
+      size: 50Gi
       mountPath: /data
     glade:
       name: glade-campaign
