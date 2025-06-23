@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: {{ .Values.sshapp.volume.fs.name }}
-    namespace: {{ .Release.Namespace}}
+  name: {{ .Values.sshapp.volume.fs.name }}
+  namespace: {{ .Release.Namespace}}
 spec:
-    accessModes:
-        - ReadWriteMany
-    storageClassName: cephfs
-    resources:
-        requests:
-            storage: {{ .Values.sshapp.volume.fs.size | default "1Gi" }} 
+  accessModes:
+    - ReadWriteMany
+  storageClassName: cephfs
+  resources:
+    requests:
+      storage: {{ .Values.sshapp.volume.fs.size | default "1Gi" }} 
