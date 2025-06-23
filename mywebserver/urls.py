@@ -22,6 +22,7 @@ urlpatterns = [
     re_path(r"glade-ls/(.*)$", views.glade_ls),
     re_path(r"data-ls/(.*)$", views.data_ls),
     re_path(r"glade-cp/(.*)$", views.glade_cp),
+    path("data-clear/", views.data_clear),
 ]
 
 
