@@ -83,5 +83,10 @@ def glade_cp(request, path):
     return HttpResponse("Done.")
 
 
-def data-clear(request):
-    pass
+def data_clear(request):
+    o = subprocess.run("/usr/bin/rm -rf /data/*", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse("Done.")
