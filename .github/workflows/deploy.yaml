@@ -59,6 +59,7 @@ jobs:
           git config user.name "${{ secrets.GIT_CONFIG_USER_NAME }}"
           sed -E "/image/s/rda-web-test:(.){1,}/rda-web-test:v$VERSION_NUMBER/" app-chart/values.yaml > app-chart/values.yaml.new
           mv app-chart/values.yaml.new app-chart/values.yaml
+          git pull
           git add app-chart/values.yaml
           git commit -m "increment version"
           git push
