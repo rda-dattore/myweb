@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.sshapp.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.sshapp.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.sshapp.name }}
+    spec:
+      volumes:
+      - name: {{ .Values.sshapp.volume.fs.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.sshapp.volume.fs.name }}
+      - name: {{ .Values.sshapp.volume.glade.name }}
+        nfs:
+          server: {{ .Values.sshapp.volume.glade.server }}
+          path: {{ .Values.sshapp.volume.glade.path }}
+          readOnly: {{ .Values.sshapp.volume.glade.readOnly }}
+      containers:
+      - name: {{ .Values.sshapp.name }}
+        image: {{ .Values.sshapp.container.image.repository }}:{{ .Values.sshapp.container.image.tag }}
+        resources:
+          limits:
+            memory: {{ .Values.sshapp.container.memory }}
+            cpu: {{ .Values.sshapp.container.cpu }}
+        ports:
+        - containerPort: {{ .Values.sshapp.container.port }}
+        volumeMounts:
+        - mountPath: {{ .Values.sshapp.volume.fs.mountPath }}
+          name: {{ .Values.sshapp.volume.fs.name }}
+        - mountPath: {{ .Values.sshapp.volume.glade.mountPath }}
+          name: {{ .Values.sshapp.volume.glade.name }}
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "Etc/UTC"
+        - name: PASSWORD_ACCESS
+          value: "true"
+        - name: USER_NAME
+          value: ""
+        - name: USER_PASSWORD
+          value: ""
