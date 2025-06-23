@@ -1,12 +1,22 @@
+{{- if .Values.ssh.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.webapp.name }}
+  name: {{ .Values.sshapp.name }}-external
   namespace: {{ .Release.Namespace }}
   labels:
-    group: {{ .Values.webapp.group }}
+    group: {{ .Values.sshapp.name }}
+    cirrus/lb: internal
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.sshapp.name }}.k8s.ucar.edu"
+    external-dns.alpha.kubernetes.io/ttl: "300"
 spec:
+  type: LoadBalancer
   ports:
-  - port: {{ .Values.webapp.container.port }}
+  - name: ssh
+    port: 2222
+    targetPort: {{ .Values.sshapp.image.port }}
+    protocol: TCP
   selector:
-    app: {{ .Values.webapp.name }}
+    app: {{ .Values.sshapp.name }}
+{{- end }}
