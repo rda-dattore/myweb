@@ -19,7 +19,7 @@ webapp:
       mountPath: /glade/campaign
       readOnly: true
   container: 
-    image: docker.io/dattore/rda-web-test:v30
+    image: docker.io/dattore/rda-web-test:v31
     port: 8080
     memory: 1G
     cpu: 2
