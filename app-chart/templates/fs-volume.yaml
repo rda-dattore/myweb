@@ -8,5 +8,5 @@ spec:
         - ReadWriteMany
     storageClassName: cephfs
     resources:
-      requests:
-        storage: {{ .Values.sshapp.volume.fs.size | default "1Gi" }} 
+        requests:
+            storage: {{ .Values.sshapp.volume.fs.size | default "1Gi" }} 
