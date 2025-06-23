@@ -7,3 +7,6 @@ spec:
     accessModes:
         - ReadWriteMany
     storageClassName: cephfs
+    resources:
+      requests:
+        storage: {{ .Values.sshapp.volume.fs.size | default "1Gi" }} 
