@@ -15,7 +15,7 @@ spec:
   ports:
   - name: ssh
     port: 2222
-    targetPort: {{ .Values.sshapp.image.port }}
+    targetPort: {{ .Values.sshapp.container.port }}
     protocol: TCP
   selector:
     app: {{ .Values.sshapp.name }}
