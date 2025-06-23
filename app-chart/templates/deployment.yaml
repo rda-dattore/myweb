@@ -46,6 +46,9 @@ spec:
         - name: PASSWORD_ACCESS
           value: "true"
         - name: USER_NAME
-          value: ""
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.sshapp.name }}-secrets
+              key: {{ .Values.sshapp.name }}-username
         - name: USER_PASSWORD
           value: ""
