@@ -71,10 +71,22 @@ def data_ls(request, path):
 
 
 def glade_cp(request, path):
+    if len(path) == 0:
+        path = "*"
+
     o = subprocess.run("/usr/bin/cp -r " + os.path.join("/glade/campaign/collections/rda/work/dattore/data", path) + " /data/",
                        shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     err = o.stderr.decode("utf-8")
     if len(err) > 0:
         return HttpResponse("ERROR: " + str(err))
 
-    return HttpResponse(o.stdout.decode("utf-8"))
+    return HttpResponse("Done.")
+
+
+def data_clear(request):
+    o = subprocess.run("/usr/bin/rm -rf /data/*", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    err = o.stderr.decode("utf-8")
+    if len(err) > 0:
+        return HttpResponse("ERROR: " + str(err))
+
+    return HttpResponse("Done.")

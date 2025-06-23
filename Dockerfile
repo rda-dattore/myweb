@@ -135,9 +135,15 @@ RUN chown -R www-data:www-data /usr/local/gdexweb
 RUN touch /var/log/django.log
 RUN chown www-data:www-data /var/log/django.log
 
+# set the version number
+ARG VERSION_NUMBER=
+RUN if [ -z "$VERSION_NUMBER"]; then \
+echo "'VERSION_NUMBER' environment variable is missing"; \
+exit 1; \
+fi
 RUN <<EOF
 cat <<EOFCAT > /usr/local/gdexweb/version_number
-32
+$VERSION_NUMBER
 EOFCAT
 EOF
 RUN <<EOF
