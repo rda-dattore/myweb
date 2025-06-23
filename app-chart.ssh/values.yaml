@@ -4,6 +4,15 @@ sshapp:
   enabled: true
   name: rda-webserver-test
   volume:
+    fs:
+      name: gdexdata
+      mountPath: /data
+    glade:
+      name: glade-campaign
+      server: gladedm1.ucar.edu
+      path: /gpfs/csfs1
+      mountPath: /glade/campaign
+      readOnly: true
   container:
     image: 
       repository: lscr.io/linuxserver/openssh-server
