@@ -1,12 +1,14 @@
 replicaCount: 1
 
-ssh:
+sshapp:
   enabled: true
   name: rda-webserver-test
-  image: 
-    repository: lscr.io/linuxserver/openssh-server
-    tag: latest
-    port: 2222
+  volume:
+  container:
+    image: 
+      repository: lscr.io/linuxserver/openssh-server
+      tag: latest
+      port: 2222
   secret:
     username:
     password:
