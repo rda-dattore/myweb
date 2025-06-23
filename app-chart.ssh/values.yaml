@@ -18,6 +18,8 @@ sshapp:
       repository: lscr.io/linuxserver/openssh-server
       tag: latest
       port: 2222
+    memory: 1G
+    cpu: 2
   secret:
     username:
     password:
