@@ -21,6 +21,7 @@ sshapp:
     memory: 1G
     cpu: 2
   secret:
+    secretStoreName:
     path: dattore@ucar.edu/ssh_container
-    username:
-    password:
+    usernameKey: username
+    passwordKey: password
