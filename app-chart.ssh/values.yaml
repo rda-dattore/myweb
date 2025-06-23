@@ -1,25 +1,12 @@
 replicaCount: 1
 
-webapp:
+ssh:
+  enabled: true
   name: rda-webserver-test
-  group: rda-web-test
-  path: /
-  tls:
-    fqdn: rda-web-test.k8s.ucar.edu
-    secretName: incommon-cert-rda-web-test
-  volume:
-    fs:
-      name: gdexdata
-      size: 50Gi
-      mountPath: /data
-    glade:
-      name: glade-campaign
-      server: gladedm1.ucar.edu
-      path: /gpfs/csfs1
-      mountPath: /glade/campaign
-      readOnly: true
-  container: 
-    image: docker.io/dattore/rda-web-test:v44
-    port: 8080
-    memory: 1G
-    cpu: 2
+  image: 
+    repository: lscr.io/linuxserver/openssh-server
+    tag: latest
+    port: 2222
+  secret:
+    username:
+    password:
