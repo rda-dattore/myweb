@@ -51,4 +51,7 @@ spec:
               name: {{ .Values.sshapp.name }}-secrets
               key: {{ .Values.sshapp.name }}-username
         - name: USER_PASSWORD
-          value: ""
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.sshapp.name }}-secrets
+              key: {{ .Values.sshapp.name }}-password
