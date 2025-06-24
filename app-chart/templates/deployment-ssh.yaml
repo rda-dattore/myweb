@@ -36,22 +36,3 @@ spec:
           name: {{ .Values.sshapp.volume.fs.name }}
         - mountPath: {{ .Values.sshapp.volume.glade.mountPath }}
           name: {{ .Values.sshapp.volume.glade.name }}
-        #env:
-        #- name: PUID
-        #  value: "1000"
-        #- name: PGID
-        #  value: "1000"
-        #- name: TZ
-        #  value: "Etc/UTC"
-        #- name: PASSWORD_ACCESS
-        #  value: "true"
-        #- name: USER_NAME
-        #  valueFrom:
-        #    secretKeyRef:
-        #      name: ssh-secrets
-        #      key: ssh-username
-        #- name: USER_PASSWORD
-        #  valueFrom:
-        #    secretKeyRef:
-        #      name: ssh-secrets
-        #      key: ssh-password
