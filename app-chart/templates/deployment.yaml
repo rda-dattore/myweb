@@ -48,10 +48,10 @@ spec:
         - name: USER_NAME
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.sshapp.name }}-secrets
+              name: ssh-secrets
               key: ssh-username
         - name: USER_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.sshapp.name }}-secrets
+              name: ssh-secrets
               key: ssh-password
