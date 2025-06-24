@@ -11,11 +11,11 @@ spec:
   target:
     name: {{ .Values.sshapp.name }}-secrets
   data:
-    - secretKey: {{ .Values.sshapp.name }}-username
+    - secretKey: ssh-username
       remoteRef:
         key: {{ .Values.sshapp.secret.path }}
         property: username
-    - secretKey: {{ .Values.sshapp.name }}-password
+    - secretKey: ssh-password
       remoteRef:
         key: {{ .Values.sshapp.secret.path }}
         property: password
