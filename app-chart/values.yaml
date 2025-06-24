@@ -3,6 +3,7 @@ replicaCount: 1
 sshapp:
   enabled: true
   name: rda-ssh
+  group: rda-web-test
   volume:
     fs:
       name: gdexdata
