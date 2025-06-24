@@ -8,7 +8,7 @@ metadata:
     group: {{ .Values.sshapp.name }}
     cirrus/lb: internal
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "rda-ssh.k8s.ucar.edu"
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.sshapp.name }}.k8s.ucar.edu"
     external-dns.alpha.kubernetes.io/ttl: "120"
 spec:
   type: LoadBalancer
