@@ -46,3 +46,15 @@ sshapp:
     port: 2222
     memory: 2G
     cpu: 2
+
+volume:
+  fs:
+    name: gdexdata
+    size: 55Gi
+    mountPath: /data
+  glade:
+    name: glade-campaign
+    server: gladedm1.ucar.edu
+    path: /gpfs/csfs1
+    mountPath: /glade/campaign
+    readOnly: true
