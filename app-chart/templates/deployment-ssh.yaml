@@ -14,14 +14,14 @@ spec:
         app: {{ .Values.sshapp.name }}
     spec:
       volumes:
-      - name: {{ .Values.sshapp.volume.fs.name }}
+      - name: {{ .Values.volume.fs.name }}
         persistentVolumeClaim:
-          claimName: {{ .Values.sshapp.volume.fs.name }}
-      - name: {{ .Values.sshapp.volume.glade.name }}
+          claimName: {{ .Values.volume.fs.name }}
+      - name: {{ .Values.volume.glade.name }}
         nfs:
-          server: {{ .Values.sshapp.volume.glade.server }}
-          path: {{ .Values.sshapp.volume.glade.path }}
-          readOnly: {{ .Values.sshapp.volume.glade.readOnly }}
+          server: {{ .Values.volume.glade.server }}
+          path: {{ .Values.volume.glade.path }}
+          readOnly: {{ .Values.volume.glade.readOnly }}
       containers:
       - name: {{ .Values.sshapp.name }}
         image: {{ .Values.sshapp.container.image.repository }}:{{ .Values.sshapp.container.image.tag }}
@@ -32,7 +32,7 @@ spec:
         ports:
         - containerPort: {{ .Values.sshapp.container.port }}
         volumeMounts:
-        - mountPath: {{ .Values.sshapp.volume.fs.mountPath }}
-          name: {{ .Values.sshapp.volume.fs.name }}
-        - mountPath: {{ .Values.sshapp.volume.glade.mountPath }}
-          name: {{ .Values.sshapp.volume.glade.name }}
+        - mountPath: {{ .Values.volume.fs.mountPath }}
+          name: {{ .Values.volume.fs.name }}
+        - mountPath: {{ .Values.volume.glade.mountPath }}
+          name: {{ .Values.volume.glade.name }}

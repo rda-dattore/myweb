@@ -17,14 +17,14 @@ spec:
         app: {{ .Values.webapp.name }}
     spec:
       volumes:
-      - name: {{ .Values.webapp.volume.fs.name }}
+      - name: {{ .Values.volume.fs.name }}
         persistentVolumeClaim:
-          claimName: {{ .Values.webapp.volume.fs.name }}
-      - name: {{ .Values.webapp.volume.glade.name }}
+          claimName: {{ .Values.volume.fs.name }}
+      - name: {{ .Values.volume.glade.name }}
         nfs:
-          server: {{ .Values.webapp.volume.glade.server }}
-          path: {{ .Values.webapp.volume.glade.path }}
-          readOnly: {{ .Values.webapp.volume.glade.readOnly }}
+          server: {{ .Values.volume.glade.server }}
+          path: {{ .Values.volume.glade.path }}
+          readOnly: {{ .Values.volume.glade.readOnly }}
       containers:
       - name: {{ .Values.webapp.name }}
         image: {{ .Values.webapp.container.image }}
@@ -35,7 +35,7 @@ spec:
         ports:
         - containerPort: {{ .Values.webapp.container.port }}
         volumeMounts:
-        - mountPath: {{ .Values.webapp.volume.fs.mountPath }}
-          name: {{ .Values.webapp.volume.fs.name }}
-        - mountPath: {{ .Values.webapp.volume.glade.mountPath }}
-          name: {{ .Values.webapp.volume.glade.name }}
+        - mountPath: {{ .Values.volume.fs.mountPath }}
+          name: {{ .Values.volume.fs.name }}
+        - mountPath: {{ .Values.volume.glade.mountPath }}
+          name: {{ .Values.volume.glade.name }}

@@ -49,7 +49,7 @@ Group \${APACHE_RUN_GROUP}
 
 HostnameLookups Off
 
-#ErrorLog /data/logs/apache2/error.log
+ErrorLog /data/logs/apache2/error.log
 LogLevel warn
 LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined
 LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
@@ -174,6 +174,7 @@ RUN <<EOF
 cat <<EOFCAT > /usr/local/bin/start_container
 #! /bin/bash
 chown -R www-data:www-data /data
+mkdir -p /data/logs/apache2
 apache2ctl -D FOREGROUND
 EOFCAT
 EOF
