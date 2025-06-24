@@ -6,7 +6,7 @@ sshapp:
   volume:
     fs:
       name: gdexdata
-      size: 55Gi
+      size: 50Gi
       mountPath: /data
     glade:
       name: glade-campaign
@@ -16,12 +16,12 @@ sshapp:
       readOnly: true
   container:
     image: 
-      repository: lscr.io/linuxserver/openssh-server
+      repository: docker.io/dattore/ssh-test
       tag: latest
     port: 2222
     memory: 1G
     cpu: 2
-  secret:
-    path: dattore@ucar.edu/ssh_container
-    usernameKey: username
-    passwordKey: password
+  #secret:
+  #  path: dattore@ucar.edu/ssh_container
+  #  usernameKey: username
+  #  passwordKey: password
