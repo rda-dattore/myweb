@@ -10,7 +10,7 @@ webapp:
   volume:
     fs:
       name: gdexdata
-      size: 50Gi
+      size: 55Gi
       mountPath: /data
     glade:
       name: glade-campaign
