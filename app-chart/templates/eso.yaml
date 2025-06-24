@@ -1,21 +1,21 @@
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: ssh-secrets
-  namespace: {{ .Release.Namespace }}
-spec:
-  refreshInterval: 1h
-  secretStoreRef:
-    name: openbao-backend
-    kind: SecretStore
-  target:
-    name: ssh-secrets
-  data:
-    - secretKey: ssh-username
-      remoteRef:
-        key: {{ .Values.sshapp.secret.path }}
-        property: username
-    - secretKey: ssh-password
-      remoteRef:
-        key: {{ .Values.sshapp.secret.path }}
-        property: password
+#apiVersion: external-secrets.io/v1beta1
+#kind: ExternalSecret
+#metadata:
+#  name: ssh-secrets
+#  namespace: {{ .Release.Namespace }}
+#spec:
+#  refreshInterval: 1h
+#  secretStoreRef:
+#    name: openbao-backend
+#    kind: SecretStore
+#  target:
+#    name: ssh-secrets
+#  data:
+#    - secretKey: ssh-username
+#      remoteRef:
+#        key: {{ .Values.sshapp.secret.path }}
+#        property: username
+#    - secretKey: ssh-password
+#      remoteRef:
+#        key: {{ .Values.sshapp.secret.path }}
+#        property: password
