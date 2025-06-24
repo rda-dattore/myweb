@@ -1,8 +1,8 @@
 on:
   push:
     branches:
-      #- "main"
-      - "none"
+      - "main"
+      #- "none"
     paths-ignore:
       - ".github/**"
       - "app-chart/**"
