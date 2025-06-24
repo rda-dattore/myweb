@@ -49,7 +49,7 @@ Group \${APACHE_RUN_GROUP}
 
 HostnameLookups Off
 
-ErrorLog \${APACHE_LOG_DIR}/error.log
+#ErrorLog /data/logs/apache2/error.log
 LogLevel warn
 LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined
 LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
@@ -120,8 +120,8 @@ cat <<EOFCAT> /etc/apache2/sites-enabled/000-default.conf
         WSGIProcessGroup gdexweb
         WSGIApplicationGroup %{GLOBAL}
 
-        ErrorLog \${APACHE_LOG_DIR}/error.log
-        CustomLog \${APACHE_LOG_DIR}/access.log combined
+        ErrorLog /data/logs/apache2/error.log
+        CustomLog /data/logs/apache2/access.log combined
 </VirtualHost>
 
 EOFCAT
