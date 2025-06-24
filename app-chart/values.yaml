@@ -19,7 +19,7 @@ sshapp:
       repository: docker.io/dattore/ssh-test
       tag: latest
     port: 2222
-    memory: 3G
+    memory: 1G
     cpu: 2
   #secret:
   #  path: dattore@ucar.edu/ssh_container
