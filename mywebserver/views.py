@@ -24,7 +24,7 @@ def root_ls(request):
 
 
 def glade_ls(request, path):
-    o = subprocess.run("/usr/bin/ls -lt " + os.path.join("/glade/campaign/collections/rda/work/dattore/data", path), shell=True,
+    o = subprocess.run("/usr/bin/ls -lt " + os.path.join("/glade/u/home/rdadata", path), shell=True,
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     err = o.stderr.decode("utf-8")
     if len(err) > 0:
