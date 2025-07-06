@@ -20,11 +20,11 @@ spec:
       - name: {{ .Values.volume.fs.name }}
         persistentVolumeClaim:
           claimName: {{ .Values.volume.fs.name }}
-      - name: {{ .Values.volume.gladehome.name }}
+      - name: {{ .Values.volume.gladeRdadataHome.name }}
         nfs:
-          server: {{ .Values.volume.gladehome.server }}
-          path: {{ .Values.volume.gladehome.path }}
-          readOnly: {{ .Values.volume.gladehome.readOnly }}
+          server: {{ .Values.volume.gladeRdadataHome.server }}
+          path: {{ .Values.volume.gladeRdadataHome.path }}
+          readOnly: {{ .Values.volume.gladeRdadataHome.readOnly }}
       containers:
       - name: {{ .Values.webapp.name }}
         image: {{ .Values.webapp.container.image }}
@@ -37,5 +37,5 @@ spec:
         volumeMounts:
         - mountPath: {{ .Values.volume.fs.mountPath }}
           name: {{ .Values.volume.fs.name }}
-        - mountPath: {{ .Values.volume.gladehome.mountPath }}
-          name: {{ .Values.volume.gladehome.name }}
+        - mountPath: {{ .Values.volume.gladeRdadataHome.mountPath }}
+          name: {{ .Values.volume.gladeRdadataHome.name }}
