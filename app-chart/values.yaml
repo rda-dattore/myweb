@@ -13,10 +13,10 @@ webapp:
       size: 55Gi
       mountPath: /data
     glade:
-      name: glade-campaign
+      name: glade-home
       server: gladedm1.ucar.edu
-      path: /gpfs/csfs1
-      mountPath: /glade/campaign
+      path: /gpfs/u/home/rdadata
+      mountPath: /glade/u/home/rdadata
       readOnly: true
   container: 
     image: docker.io/dattore/rda-web-test:v46
