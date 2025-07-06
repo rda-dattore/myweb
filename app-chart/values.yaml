@@ -7,17 +7,6 @@ webapp:
   tls:
     fqdn: rda-web-test.k8s.ucar.edu
     secretName: incommon-cert-rda-web-test
-  volume:
-    fs:
-      name: gdexdata
-      size: 55Gi
-      mountPath: /data
-    glade:
-      name: glade-home
-      server: gladedm1.ucar.edu
-      path: /gpfs/u/home/rdadata
-      mountPath: /glade/u/home/rdadata
-      readOnly: true
   container: 
     image: docker.io/dattore/rda-web-test:v2
     port: 8080
@@ -28,17 +17,6 @@ sshapp:
   enabled: true
   name: rda-sshserver-test
   group: rda-ssh-test
-  volume:
-    fs:
-      name: gdexdata
-      size: 55Gi
-      mountPath: /data
-    glade:
-      name: glade-campaign
-      server: gladedm1.ucar.edu
-      path: /gpfs/csfs1
-      mountPath: /glade/campaign
-      readOnly: true
   container:
     image: 
       repository: docker.io/dattore/ssh-test
@@ -57,4 +35,10 @@ volume:
     server: gladedm1.ucar.edu
     path: /gpfs/csfs1
     mountPath: /glade/campaign
+    readOnly: true
+  glade-home:
+    name: glade-home
+    server: gladedm1.ucar.edu
+    path: /gpfs/u/home/rdadata
+    mountPath: /glade/u/home/rdadata
     readOnly: true
