@@ -15,6 +15,7 @@ RUN python /usr/local/gdexweb/manage.py migrate
 RUN python /usr/local/gdexweb/manage.py collectstatic --noinput
 
 # install database tools
+RUN apt-get update
 RUN apt-get install -y libpq-dev postgresql
 RUN pip install psycopg2
 
