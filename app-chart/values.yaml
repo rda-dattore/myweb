@@ -58,3 +58,9 @@ volume:
     path: /gpfs/csfs1
     mountPath: /glade/campaign
     readOnly: true
+  glade-home:
+    name: glade-home
+    server: gladedm1.ucar.edu
+    path: /gpfs/u/home/rdadata
+    mountPath: /glade/u/home/rdadata
+    readOnly: true
