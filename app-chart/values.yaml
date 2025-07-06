@@ -19,7 +19,7 @@ webapp:
       mountPath: /glade/u/home/rdadata
       readOnly: true
   container: 
-    image: docker.io/dattore/rda-web-test:v46
+    image: docker.io/dattore/rda-web-test:v2
     port: 8080
     memory: 1G
     cpu: 2
