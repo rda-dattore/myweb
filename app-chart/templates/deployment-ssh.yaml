@@ -24,7 +24,7 @@ spec:
           readOnly: {{ .Values.volume.glade.readOnly }}
       containers:
       - name: {{ .Values.sshapp.name }}
-        image: {{ .Values.sshapp.container.image.repository }}:{{ .Values.sshapp.container.image.tag }}
+        image: {{ .Values.sshapp.container.image }}
         resources:
           limits:
             memory: {{ .Values.sshapp.container.memory }}
