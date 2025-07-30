@@ -20,7 +20,6 @@ sshapp:
   container:
     image: 
       repository: docker.io/dattore/ssh-test:v10
-      tag: latest
     port: 2222
     memory: 1G
     cpu: 2
