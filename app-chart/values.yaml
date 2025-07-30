@@ -18,8 +18,7 @@ sshapp:
   name: rda-sshserver-test
   group: rda-ssh-test
   container:
-    image: 
-      repository: docker.io/dattore/ssh-test:v10
+    image: docker.io/dattore/ssh-test:v10
     port: 2222
     memory: 1G
     cpu: 2
