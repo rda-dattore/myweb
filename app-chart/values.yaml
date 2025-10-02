@@ -25,7 +25,7 @@ sshapp:
 
 volume:
   fs:
-    name: gdexdata
+    name: gaasdata
     mountPath: /data
   glade:
     name: glade-campaign
