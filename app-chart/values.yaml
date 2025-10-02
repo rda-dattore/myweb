@@ -26,6 +26,7 @@ sshapp:
 volume:
   fs:
     name: gaasdata
+    size: 500Gi
     mountPath: /data
   glade:
     name: glade-campaign
