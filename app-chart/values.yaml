@@ -1,12 +1,12 @@
 replicaCount: 1
 
 webapp:
-  name: rda-webserver-test
-  group: rda-web-test
+  name: gaas
+  group: gaas
   path: /
   tls:
-    fqdn: rda-web-test.k8s.ucar.edu
-    secretName: incommon-cert-rda-web-test
+    fqdn: gaas.k8s.ucar.edu
+    secretName: incommon-cert-gaas
   container: 
     image: docker.io/dattore/rda-web-test:v3
     port: 8080
@@ -14,7 +14,7 @@ webapp:
     cpu: 2
 
 sshapp:
-  enabled: true
+  enabled: false
   name: rda-sshserver-test
   group: rda-ssh-test
   container:
